@@ -3,8 +3,8 @@ package storage
 import (
 	"context"
 	"fmt"
-
 	"github.com/go-redis/redis/v8"
+	"time"
 )
 
 type RedisService struct {
@@ -16,7 +16,7 @@ var (
 	redisService = &RedisService{}
 )
 
-const cacheDuration = 300 //time is in seconds
+const cacheDuration = 5 * time.Minute
 
 func InitializeCache() *RedisService {
 	redisClient := redis.NewClient(&redis.Options{
@@ -38,7 +38,7 @@ func InitializeCache() *RedisService {
 }
 
 func SetURL(original string, shortURL string) { //why is userId needed?
-	err := redisService.redisClient.Set(ctx, shortURL, original, cacheDuration)
+	err := redisService.redisClient.Set(ctx, shortURL, original, cacheDuration).Err()
 	if err != nil {
 		panic(fmt.Sprintf("Failed to save to Redis | Error: %v - shortUrl: %s - originalUrl: %s\n", err, shortURL, original))
 	}
