@@ -51,7 +51,7 @@ func GetURLFromDB(shortUrl string) string {
 	var res string
 	err := row.Scan(&res)
 	if err == sql.ErrNoRows {
-		fmt.Println("Provided short URL doesn't exist in the database") //should this be an exception?
+		return "No Result" //should this be an exception?
 	} else if err != nil {
 		panic(fmt.Sprintf("Failed to retrieve URL from the database | Error: %v - shortUrl: %s\n", err, shortUrl))
 	}
