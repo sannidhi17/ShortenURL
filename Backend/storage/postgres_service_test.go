@@ -12,11 +12,11 @@ func init() {
 	testPostgresService = InitDB()
 }
 
-func TestCacheInit(t *testing.T) {
+func TestDBInit(t *testing.T) {
 	assert.True(t, testPostgresService.postgresdb != nil)
 }
 
-func TestInsertionAndRetrieval(t *testing.T) {
+func TestInsertionAndRetrievalfromDB(t *testing.T) {
 	initialLink := "https://www.long-link-to-test.html"
 	shortURL := "Jsz4k57oAX"
 	AddURLToDB(initialLink, shortURL)

@@ -2,13 +2,16 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"shortenurl/router"
 	"shortenurl/storage"
+
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	GinRouter := gin.Default()
+	GinRouter.Use(cors.Default())
 	GinRouter.GET("/", getResponse)
 
 	GinRouter.POST("/create-short-url", func(c *gin.Context) {
