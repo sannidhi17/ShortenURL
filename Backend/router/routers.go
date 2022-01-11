@@ -2,9 +2,10 @@ package router
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"shortenurl/shorturl"
 	"shortenurl/storage"
+
+	"github.com/gin-gonic/gin"
 )
 
 // Request model definition
@@ -13,13 +14,14 @@ type RequestModel struct {
 }
 
 const (
-	host = "http://localhost:8080/"
+	host  = "http://localhost:8080/"
 	nores = "No Result"
 )
 
 func ShortenURL(c *gin.Context) {
+	fmt.Println(c)
 	var creationRequest RequestModel
-	err := c.ShouldBindJSON(&creationRequest);
+	err := c.ShouldBindJSON(&creationRequest)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -27,7 +29,7 @@ func ShortenURL(c *gin.Context) {
 
 	shortURL := shorturl.GenerateShortURL(creationRequest.OriginalUrl)
 	originalUrl := storage.GetURLFromDB(shortURL)
-	if (originalUrl == nores) {
+	if originalUrl == nores {
 		storage.AddURLToDB(creationRequest.OriginalUrl, shortURL)
 	}
 
@@ -40,7 +42,7 @@ func ShortenURL(c *gin.Context) {
 func RedirectToOriginalURL(c *gin.Context) {
 	shortUrl := c.Param("shortUrl")
 	originalUrl := storage.GetURLFromDB(shortUrl)
-	if (originalUrl != nores) {
+	if originalUrl != nores {
 		c.Redirect(302, originalUrl)
 	} else {
 		c.JSON(400, "Invalid param")
