@@ -1,4 +1,5 @@
 import React from "react";
+import './URLInput.css';
 
 class URLInput extends React.Component {
     constructor (props) {
@@ -46,14 +47,14 @@ class URLInput extends React.Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    <input type="text" value={this.state.value} onChange={this.handleChange}/>
-                    <input type="submit" value="Submit" />
+            <div className="FullWidth">
+                <form onSubmit={this.handleSubmit} className="FullWidth">
+                    <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="https://sample-url.com" className="TextInput"/>
+                    <input type="submit" value="SUBMIT" className="SubmitButton"/>
                 </form>
-                <h3>
+                <h4>
                     <a href = {this.state.shorturl} target="_blank" className="App-link">{this.state.shorturl}</a>
-                </h3>
+                </h4>
             </div>
         );
     }
